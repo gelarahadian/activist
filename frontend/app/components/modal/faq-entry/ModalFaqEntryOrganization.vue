@@ -57,6 +57,7 @@ watch(context, (newContext) => {
 async function handleSubmit(values: unknown) {
   let updateResponse = false;
   const newValues = { ...formData.value, ...(values as FaqEntry) };
+  console.log("newValues", newValues);
 
   updateResponse = isAddMode
     ? await createFAQ(newValues as FaqEntry)

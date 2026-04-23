@@ -79,6 +79,7 @@ const props = defineProps<{
   imageModal?: boolean;
   onClose?: () => void;
   modalName: string;
+  onClose?: () => void;
 }>();
 
 const emit = defineEmits(["closeModal"]);
