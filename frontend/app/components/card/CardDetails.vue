@@ -72,9 +72,9 @@
 
 <script setup lang="ts">
 const { openModal: openModalTextEvent } = useModalHandlers("ModalTextEvent");
-const { openModal: openModalOrganizationOverview } = useModalHandlers(
-  "ModalOrganizationOverview"
-);
+// const { openModal: openModalOrganizationOverview } = useModalHandlers(
+//   "ModalOrganizationOverview"
+// );
 const paramsEventId = useRoute().params.eventId;
 const eventId = typeof paramsEventId === "string" ? paramsEventId : "";
 

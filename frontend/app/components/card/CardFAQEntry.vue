@@ -39,20 +39,26 @@
         </DisclosureButton>
         <div class="flex gap-2 pr-2">
           <IconEdit
-            @click="openModalEditFAQ({faqEntry: faqEntry})"
+            @click="openModalEditFAQ({ faqEntry: faqEntry })"
             class="flex"
             data-testid="faq-edit-button"
             :entity="entity"
           />
           <IconDelete
-            @click.stop="openModalDeleteFAQ({message: 'i18n.components.card_faq_entry.delete_confirmation',
-          name: 'ModalDeleteFAQ',
-          onConfirmation: handleDelete
-          })"
-            @keydown.enter="openModalDeleteFAQ({message: 'i18n.components.card_faq_entry.delete_confirmation',
-          name: 'ModalDeleteFAQ',
-          onConfirmation: handleDelete
-          })"
+            @click.stop="
+              openModalDeleteFAQ({
+                message: 'i18n.components.card_faq_entry.delete_confirmation',
+                name: 'ModalDeleteFAQ',
+                onConfirmation: handleDelete,
+              })
+            "
+            @keydown.enter="
+              openModalDeleteFAQ({
+                message: 'i18n.components.card_faq_entry.delete_confirmation',
+                name: 'ModalDeleteFAQ',
+                onConfirmation: handleDelete,
+              })
+            "
             :aria-label="$t('i18n.components.card_faq_entry.delete_aria_label')"
             class="flex"
             data-testid="faq-delete-button"
@@ -87,9 +93,8 @@ const props = defineProps<{
 
 const modalName = `ModalFaqEntry${props.pageType.charAt(0).toUpperCase() + props.pageType.slice(1)}`;
 const { openModal: openModalEditFAQ } = useModalHandlers(modalName);
-console.log(props.pageType)
 
-const {openModal: openModalDeleteFAQ} = useModalHandlers(`ModalAlert`)
+const { openModal: openModalDeleteFAQ } = useModalHandlers(`ModalAlert`);
 
 const root = ref<HTMLElement | null>(null);
 defineExpose({ root });

@@ -22,9 +22,9 @@
       /> -->
       <BtnAction
         v-if="group"
-        @click="openModalSharePage({group: group})"
+        @click="openModalSharePage({ group: group })"
         @keydown="handleTabPress(true, $event)"
-        @keydown.enter="openModalSharePage({group: group})"
+        @keydown.enter="openModalSharePage({ group: group })"
         ariaLabel="i18n._global.share_organization_aria_label"
         class="flex max-h-10 w-full items-center"
         :cta="true"

@@ -13,26 +13,22 @@
   <!-- QR Code -->
   <ModalQRCode />
 
+  <ModalFaqEntryOrganization />
+  <ModalFaqEntryEvent />
+  <ModalFaqEntryGroup />
 
+  <ModalResourceEvent />
+  <ModalResourceGroup />
+  <ModalResourceOrganization />
 
-    <ModalFaqEntryOrganization />
-    <ModalFaqEntryEvent />
-    <ModalFaqEntryGroup />
+  <ModalSocialLinksOrganization />
+  <ModalTextOrganization />
+  <ModalSocialLinksEvent />
+  <ModalTextEvent />
+  <ModalSocialLinksGroup />
+  <ModalTextGroup />
 
-    <ModalResourceEvent />
-    <ModalResourceGroup />
-    <ModalResourceOrganization />
-
-
-
-    <ModalSocialLinksOrganization />
-    <ModalTextOrganization />
-    <ModalSocialLinksEvent />
-    <ModalTextEvent />
-    <ModalSocialLinksGroup />
-    <ModalTextGroup />
-
-    <!-- <ModalUploadImageIcon
+  <!-- <ModalUploadImageIcon
       @closeModal="handleCloseModalUploadImageIcon"
       :entityId="eventId || ''"
       :entityType="EntityType.EVENT"
@@ -48,5 +44,4 @@
       :images="images || []"
       :orgId="organization?.id || ''"
     /> -->
-
 </template>

@@ -1,6 +1,5 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <template>
-
   <div class="flex flex-col bg-layer-0 px-4 xl:px-8">
     <Head>
       <Title>{{ event?.name }}</Title>
@@ -32,8 +31,12 @@
           ariaLabel="i18n._global.support_event_aria_label"
         /> -->
         <BtnAction
-          @click="openModalSharePage({event: event as unknown as CommunityEvent})"
-          @keydown.enter="openModalSharePage({event: event as unknown as CommunityEvent})"
+          @click="
+            openModalSharePage({ event: event as unknown as CommunityEvent })
+          "
+          @keydown.enter="
+            openModalSharePage({ event: event as unknown as CommunityEvent })
+          "
           ariaLabel="i18n._global.share_event_aria_label"
           class="w-full sm:w-max"
           :cta="true"

@@ -29,8 +29,8 @@
           :counter="group.supporters"
         /> -->
         <BtnAction
-          @click="openModalSharePage({group: group})"
-          @keydown.enter="openModalSharePage({group: group})"
+          @click="openModalSharePage({ group: group })"
+          @keydown.enter="openModalSharePage({ group: group })"
           ariaLabel="i18n.pages.organizations.groups.about.share_group_aria_label"
           class="w-max"
           :cta="true"

@@ -16,7 +16,9 @@
           ariaLabel="i18n.components.modal_alert.confirm_action_aria_label"
           :cta="true"
           fontSize="sm"
-          :label="context.confirmBtnLabel || 'i18n.components.modal_alert.confirm'"
+          :label="
+            context.confirmBtnLabel || 'i18n.components.modal_alert.confirm'
+          "
         />
         <BtnAction
           @click="handleCloseModal"
@@ -33,10 +35,10 @@
 <script setup lang="ts">
 const modalName = "ModalAlert";
 const { context, handleCloseModal } = useModalHandlers<{
-  message: string, 
-  confirmBtnLabel?: string, 
-  onConfirmation?: () => Promise<void> | void, 
-  name?: string
+  message: string;
+  confirmBtnLabel?: string;
+  onConfirmation?: () => Promise<void> | void;
+  name?: string;
 }>(modalName);
 
 const onConfirm = async () => {

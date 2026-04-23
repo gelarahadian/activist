@@ -12,19 +12,18 @@
 
 <script setup lang="ts">
 const modalName = "ModalResourceOrganization";
-const { context, handleCloseModal } = useModalHandlers<{resource?: Resource}>(modalName);
+const { context, handleCloseModal } = useModalHandlers<{ resource?: Resource }>(
+  modalName
+);
 const route = useRoute();
 
 const organizationId = computed(() => {
-  return typeof route.params.orgId === "string"
-    ? route.params.orgId
-    : "";
+  return typeof route.params.orgId === "string" ? route.params.orgId : "";
 });
 
-const { data: organization } = useGetOrganization(organizationId || "");
-const { createResource, updateResource } = useOrganizationResourcesMutations(
-  organizationId || ""
-);
+const { data: organization } = useGetOrganization(organizationId);
+const { createResource, updateResource } =
+  useOrganizationResourcesMutations(organizationId);
 
 const formData = ref<Resource | undefined>();
 
@@ -32,19 +31,17 @@ let isAddMode = true;
 let submitLabel = "";
 let title = "";
 
-console.log("context", context.value);
-
 watch(context, (newContext) => {
   isAddMode = !newContext?.resource;
 
   submitLabel = isAddMode
-  ? "i18n.components.modal.resource._global.add_resource"
-  : "i18n.components.modal.resource._global.update_resource";
+    ? "i18n.components.modal.resource._global.add_resource"
+    : "i18n.components.modal.resource._global.update_resource";
 
   title = isAddMode
     ? "i18n.components.modal.resource._global.add_resource"
     : "i18n.components.modal.resource._global.edit_resource";
-  
+
   if (!isAddMode) {
     formData.value = {} as Resource;
     formData.value.id = newContext?.resource?.id || "";
@@ -54,7 +51,7 @@ watch(context, (newContext) => {
     formData.value.topics = newContext?.resource?.topics || [];
     formData.value.order = newContext?.resource?.order || 0;
   }
-})
+});
 
 async function handleSubmit(values: unknown) {
   const newValues = {
@@ -74,5 +71,5 @@ async function handleSubmit(values: unknown) {
 
 const handleOnCloseModal = () => {
   formData.value = {} as Resource;
-}
+};
 </script>

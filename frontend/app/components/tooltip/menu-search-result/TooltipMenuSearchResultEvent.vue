@@ -20,9 +20,9 @@
         ariaLabel="i18n.components.tooltip_menu_search_result_event.attend_aria_label"
       /> -->
       <BtnAction
-        @click="openModalSharePage({event: event})"
+        @click="openModalSharePage({ event: event })"
         @keydown="handleTabPress(true, $event)"
-        @keydown.enter="openModalSharePage({event: event})"
+        @keydown.enter="openModalSharePage({ event: event })"
         ariaLabel="i18n._global.share_event_aria_label"
         class="flex max-h-10 w-full items-center"
         :cta="true"

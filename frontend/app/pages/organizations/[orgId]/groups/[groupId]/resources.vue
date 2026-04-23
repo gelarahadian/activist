@@ -82,7 +82,8 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 
-const { openModal: openModalResourceGroup } = useModalHandlers("ModalResourceGroup");
+const { openModal: openModalResourceGroup } =
+  useModalHandlers("ModalResourceGroup");
 const { canEdit } = useUser();
 const groupId = (useRoute().params.groupId as string) ?? "";
 

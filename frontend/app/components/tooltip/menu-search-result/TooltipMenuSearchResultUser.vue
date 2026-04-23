@@ -12,9 +12,9 @@
         ariaLabel="i18n.components.tooltip_menu_search_result_user.support_user_aria_label"
       /> -->
       <BtnAction
-        @click="openModalSharePage({user: user})"
+        @click="openModalSharePage({ user: user })"
         @keydown="handleTabPress(true, $event)"
-        @keydown.enter="openModalSharePage({user: user})"
+        @keydown.enter="openModalSharePage({ user: user })"
         :ariaLabel="
           $t(
             'i18n.components.tooltip_menu_search_result_user.share_user_aria_label'

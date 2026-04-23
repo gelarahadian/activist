@@ -87,23 +87,27 @@
     </div>
     <div class="flex items-center space-x-2">
       <IconEdit
-        @click.stop="openModalResource({resource: resource})"
-        @keydown.enter="openModalResource({resource: resource})"
+        @click.stop="openModalResource({ resource: resource })"
+        @keydown.enter="openModalResource({ resource: resource })"
         :entity="entity"
       />
       <IconDelete
-        @click.stop="openModalDeleteConfirm({
-          confirmBtnLabel: 'i18n.components.card_resource.confirm_delete',
-          message: 'i18n.components.card_resource.confirm_delete_message',
-          name: 'ModalAlert',
-          onConfirmation: handleDeleteResource
-          })"
-        @keydown.enter="openModalDeleteConfirm({
-          confirmBtnLabel: 'i18n.components.card_resource.confirm_delete',
-          message: 'i18n.components.card_resource.confirm_delete_message',
-          name: 'ModalAlert',
-          onConfirmation: handleDeleteResource
-          })"
+        @click.stop="
+          openModalDeleteConfirm({
+            confirmBtnLabel: 'i18n.components.card_resource.confirm_delete',
+            message: 'i18n.components.card_resource.confirm_delete_message',
+            name: 'ModalAlert',
+            onConfirmation: handleDeleteResource,
+          })
+        "
+        @keydown.enter="
+          openModalDeleteConfirm({
+            confirmBtnLabel: 'i18n.components.card_resource.confirm_delete',
+            message: 'i18n.components.card_resource.confirm_delete_message',
+            name: 'ModalAlert',
+            onConfirmation: handleDeleteResource,
+          })
+        "
         :entity="entity"
       />
     </div>
@@ -155,7 +159,9 @@ const dragIconSizeClass = computed(() => ({
   "h-[50px] w-[50px]": !props.isReduced,
 }));
 
-const { openModal: openModalResource } = useModalHandlers(`ModalResource${props.entityType.charAt(0).toUpperCase() + props.entityType.slice(1)}`);
+const { openModal: openModalResource } = useModalHandlers(
+  `ModalResource${props.entityType.charAt(0).toUpperCase() + props.entityType.slice(1)}`
+);
 
 // Delete confirmation modal.
 const { openModal: openModalDeleteConfirm } = useModalHandlers("ModalAlert");

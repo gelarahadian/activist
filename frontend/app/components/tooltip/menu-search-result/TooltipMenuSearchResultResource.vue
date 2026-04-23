@@ -12,9 +12,9 @@
         ariaLabel="i18n.components._global.star"
       /> -->
       <BtnAction
-        @click="openModalSharePage({resource: resource})"
+        @click="openModalSharePage({ resource: resource })"
         @keydown="handleTabPress(true, $event)"
-        @keydown.enter="openModalSharePage({resource: resource})"
+        @keydown.enter="openModalSharePage({ resource: resource })"
         ariaLabel="i18n._global.share"
         class="flex max-h-10 w-full items-center"
         :cta="true"

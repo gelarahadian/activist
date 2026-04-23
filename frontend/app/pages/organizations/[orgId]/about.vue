@@ -29,8 +29,16 @@
           ariaLabel="i18n._global.support_organization_aria_label"
         /> -->
           <BtnAction
-            @click="openModalSharePage({ organization: organization as unknown as Organization })"
-            @keydown.enter="openModalSharePage({ organization: organization as unknown as Organization })"
+            @click="
+              openModalSharePage({
+                organization: organization as unknown as Organization,
+              })
+            "
+            @keydown.enter="
+              openModalSharePage({
+                organization: organization as unknown as Organization,
+              })
+            "
             ariaLabel="i18n._global.share_organization_aria_label"
             class="flex w-full justify-center sm:w-max"
             :cta="true"

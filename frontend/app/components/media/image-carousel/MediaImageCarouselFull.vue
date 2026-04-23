@@ -7,14 +7,18 @@
       :imageUrls="imageUrls"
     />
     <button
-      @click="openMediaImageCarousel({
-        entityType: props.entityType,
-        imageUrls
-      })"
-      @keydown.enter="openMediaImageCarousel({
-        entityType: props.entityType,
-        imageUrls
-      })"
+      @click="
+        openMediaImageCarousel({
+          entityType: props.entityType,
+          imageUrls,
+        })
+      "
+      @keydown.enter="
+        openMediaImageCarousel({
+          entityType: props.entityType,
+          imageUrls,
+        })
+      "
       :aria-label="
         $t('i18n.components.media_image_carousel_full.open_modal_aria_label')
       "
@@ -32,9 +36,8 @@ const props = defineProps<{
   images: ContentImage[];
 }>();
 
-const {
-  openModal: openMediaImageCarousel,
-} = useModalHandlers("ModalMediaImage");
+const { openModal: openMediaImageCarousel } =
+  useModalHandlers("ModalMediaImage");
 
 const { defaultImageUrls } = useFileManager();
 const imageUrls = ref<string[]>([]);

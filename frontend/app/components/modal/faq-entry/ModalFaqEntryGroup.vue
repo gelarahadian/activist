@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <template>
-  <ModalBase :modalName="modalName" @close="handleOnCloseModal">
+  <ModalBase :close="handleOnCloseModal" :modalName="modalName">
     <FormFAQEntry
       :formData="formData"
       :handleSubmit="handleSubmit"
@@ -12,13 +12,13 @@
 
 <script setup lang="ts">
 const modalName = "ModalFaqEntryGroup";
-const { context, handleCloseModal } = useModalHandlers<{faqEntry?: FaqEntry}>(modalName);
+const { context, handleCloseModal } = useModalHandlers<{ faqEntry?: FaqEntry }>(
+  modalName
+);
 const route = useRoute();
 
 const groupId = computed(() => {
-  return typeof route.params.groupId === "string"
-    ? route.params.groupId
-    : "";
+  return typeof route.params.groupId === "string" ? route.params.groupId : "";
 });
 
 const { data: group } = useGetGroup(groupId);
@@ -40,19 +40,19 @@ watch(context, (newContext) => {
   isAddMode = !newContext?.faqEntry;
 
   submitLabel = isAddMode
-  ? "i18n.components.modal.faq_entry._global.add_faq_entry"
-  : "i18n.components.modal._global.update_texts";
+    ? "i18n.components.modal.faq_entry._global.add_faq_entry"
+    : "i18n.components.modal._global.update_texts";
 
   title = isAddMode
     ? "i18n.components.modal.faq_entry._global.add_faq_entry"
     : "i18n.components.modal.faq_entry._global.edit_entry";
-  
+
   if (!isAddMode) {
     formData.value.id = newContext?.faqEntry?.id || "";
     formData.value.question = newContext?.faqEntry?.question || "";
     formData.value.answer = newContext?.faqEntry?.answer || "";
   }
-})
+});
 
 async function handleSubmit(values: unknown) {
   let updateResponse = false;
@@ -69,7 +69,7 @@ async function handleSubmit(values: unknown) {
       iso: "en",
       order: (group.value?.faqEntries ?? []).length,
       question: "",
-      answer: ""
+      answer: "",
     };
   }
 }
@@ -80,7 +80,7 @@ const handleOnCloseModal = () => {
     iso: "en",
     order: (group.value?.faqEntries ?? []).length,
     question: "",
-    answer: ""
+    answer: "",
   };
-}
+};
 </script>
