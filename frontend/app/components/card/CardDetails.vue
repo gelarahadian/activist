@@ -37,17 +37,12 @@
             />
             <button
               v-if="event.orgs.length > 1"
-              @click="openModalOrganizationOverview()"
-              @keydown.enter="openModalOrganizationOverview()"
+              @click="openModalOrganizationOverview({event: event})"
+              @keydown.enter="openModalOrganizationOverview({event: event})"
               class="text-sm font-semibold text-black"
             >
               (+{{ event.orgs.length - 1 }} more)
             </button> -->
-            <ModalOrganizationOverview
-              @closeModal="openModalOrganizationOverview()"
-              :cta="true"
-              :event="event"
-            />
           </div>
           <!-- <MetaTagAttendance
             :numAttending="event.attendees ? event.attendees.length : 0"

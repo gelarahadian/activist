@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <template>
-  <ModalBase :modalName="modalName">
+  <ModalBase :modalName="modalName" @close="handleOnCloseModal">
     <FormFAQEntry
       :formData="formData"
       :handleSubmit="handleSubmit"
@@ -11,71 +11,53 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  faqEntry?: FaqEntry;
-}>();
+const modalName = "ModalFaqEntryEvent";
+const { context, handleCloseModal } = useModalHandlers<{faqEntry?: FaqEntry}>(modalName);
+const route = useRoute();
 
-const isAddMode = !props.faqEntry;
-const modalName = "ModalFaqEntryEvent" + (props.faqEntry?.id ?? "");
-const { handleCloseModal } = useModalHandlers(modalName);
-
-const paramsEventId = useRoute().params.eventId;
-const eventId = typeof paramsEventId === "string" ? paramsEventId : "";
+const eventId = computed(() => {
+  return typeof route.params.eventId === "string"
+    ? route.params.eventId
+    : "";
+});
 
 const { data: event } = useGetEvent(eventId);
 const { updateFAQ, createFAQ } = useEventFAQEntryMutations(eventId);
 
-const formData = ref<FaqEntry>(
-  isAddMode
-    ? {
-        id: "",
-        iso: "en",
-        order: (event.value?.faqEntries ?? []).length,
-        question: "",
-        answer: "",
-      }
-    : {
-        id: props.faqEntry!.id,
-        iso: props.faqEntry!.iso,
-        order: props.faqEntry!.order,
-        question: "",
-        answer: "",
-      }
-);
+const formData = ref({
+  id: "",
+  iso: "en",
+  order: (event.value?.faqEntries ?? []).length,
+  question: "",
+  answer: "",
+});
 
-const submitLabel = isAddMode
+let isAddMode = true;
+let submitLabel = "";
+let title = "";
+
+watch(context, (newContext) => {
+  isAddMode = !newContext?.faqEntry;
+
+  submitLabel = isAddMode
   ? "i18n.components.modal.faq_entry._global.add_faq_entry"
   : "i18n.components.modal._global.update_texts";
 
-const title = isAddMode
-  ? "i18n.components.modal.faq_entry._global.add_faq_entry"
-  : "i18n.components.modal.faq_entry._global.edit_entry";
-
-onMounted(async () => {
-  if (!isAddMode && props.faqEntry) {
-    formData.value.id = props.faqEntry.id;
-    formData.value.question = props.faqEntry.question;
-    formData.value.answer = props.faqEntry.answer;
+  title = isAddMode
+    ? "i18n.components.modal.faq_entry._global.add_faq_entry"
+    : "i18n.components.modal.faq_entry._global.edit_entry";
+  
+  if (!isAddMode) {
+    formData.value.id = newContext?.faqEntry?.id || "";
+    formData.value.question = newContext?.faqEntry?.question || "";
+    formData.value.answer = newContext?.faqEntry?.answer || "";
   }
-});
-
-watch(
-  props,
-  (newValues) => {
-    if (!isAddMode && newValues.faqEntry) {
-      formData.value.id = newValues.faqEntry.id;
-      formData.value.question = newValues.faqEntry.question;
-      formData.value.answer = newValues.faqEntry.answer;
-    }
-  },
-  {
-    deep: true,
-  }
-);
+})
 
 async function handleSubmit(values: unknown) {
   let updateResponse = false;
   const newValues = { ...formData.value, ...(values as FaqEntry) };
+  console.log("newValues", newValues);
 
   updateResponse = isAddMode
     ? await createFAQ(newValues as FaqEntry)
@@ -83,6 +65,23 @@ async function handleSubmit(values: unknown) {
 
   if (updateResponse) {
     handleCloseModal();
+    formData.value = {
+      id: "",
+      iso: "en",
+      order: (event.value?.faqEntries ?? []).length,
+      question: "",
+      answer: ""
+    };
   }
+}
+
+const handleOnCloseModal = () => {
+  formData.value = {
+    id: "",
+    iso: "en",
+    order: (event.value?.faqEntries ?? []).length,
+    question: "",
+    answer: ""
+  };
 }
 </script>

@@ -87,34 +87,26 @@
     </div>
     <div class="flex items-center space-x-2">
       <IconEdit
-        @click.stop="openModalEdit()"
-        @keydown.enter="openModalEdit()"
+        @click.stop="openModalResource({resource: resource})"
+        @keydown.enter="openModalResource({resource: resource})"
         :entity="entity"
       />
       <IconDelete
-        @click.stop="openModalDeleteConfirm()"
-        @keydown.enter="openModalDeleteConfirm()"
+        @click.stop="openModalDeleteConfirm({
+          confirmBtnLabel: 'i18n.components.card_resource.confirm_delete',
+          message: 'i18n.components.card_resource.confirm_delete_message',
+          name: 'ModalAlert',
+          onConfirmation: handleDeleteResource
+          })"
+        @keydown.enter="openModalDeleteConfirm({
+          confirmBtnLabel: 'i18n.components.card_resource.confirm_delete',
+          message: 'i18n.components.card_resource.confirm_delete_message',
+          name: 'ModalAlert',
+          onConfirmation: handleDeleteResource
+          })"
         :entity="entity"
       />
     </div>
-    <ModalResourceGroup
-      v-if="EntityType.GROUP === entityType"
-      :resource="resource"
-    />
-    <ModalResourceEvent
-      v-if="EntityType.EVENT === entityType"
-      :resource="resource"
-    />
-    <ModalResourceOrganization
-      v-if="EntityType.ORGANIZATION === entityType"
-      :resource="resource"
-    />
-    <ModalAlert
-      :confirmBtnLabel="'i18n.components.card_resource.confirm_delete'"
-      :message="'i18n.components.card_resource.confirm_delete_message'"
-      :name="modalAlertName"
-      :onConfirmation="handleDeleteResource"
-    />
   </div>
 </template>
 
@@ -163,14 +155,10 @@ const dragIconSizeClass = computed(() => ({
   "h-[50px] w-[50px]": !props.isReduced,
 }));
 
-const openModalEdit = () => {
-  const name = `ModalResource${props.entityType.charAt(0).toUpperCase() + props.entityType.slice(1)}${props.resource.id}`;
-  useModalHandlers(name).openModal();
-};
+const { openModal: openModalResource } = useModalHandlers(`ModalResource${props.entityType.charAt(0).toUpperCase() + props.entityType.slice(1)}`);
 
 // Delete confirmation modal.
-const modalAlertName = `ModalAlertResource${props.resource.id}`;
-const { openModal: openModalDeleteConfirm } = useModalHandlers(modalAlertName);
+const { openModal: openModalDeleteConfirm } = useModalHandlers("ModalAlert");
 
 // Map entity type to delete mutation.
 const deleteByEntityType = {

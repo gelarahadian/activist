@@ -7,8 +7,14 @@
       :imageUrls="imageUrls"
     />
     <button
-      @click="openMediaImageCarousel()"
-      @keydown.enter="openMediaImageCarousel()"
+      @click="openMediaImageCarousel({
+        entityType: props.entityType,
+        imageUrls
+      })"
+      @keydown.enter="openMediaImageCarousel({
+        entityType: props.entityType,
+        imageUrls
+      })"
       :aria-label="
         $t('i18n.components.media_image_carousel_full.open_modal_aria_label')
       "
@@ -16,12 +22,6 @@
     >
       <Icon class="-mb-1" :name="IconMap.FULL_SCREEN" size="1.5em" />
     </button>
-    <ModalMediaImageCarousel
-      @closeModal="handleCloseMediaImageCarousel"
-      :entityId="props.entityId"
-      :entityType="props.entityType"
-      :imageUrls="imageUrls"
-    />
   </div>
 </template>
 
@@ -34,7 +34,6 @@ const props = defineProps<{
 
 const {
   openModal: openMediaImageCarousel,
-  handleCloseModal: handleCloseMediaImageCarousel,
 } = useModalHandlers("ModalMediaImage");
 
 const { defaultImageUrls } = useFileManager();

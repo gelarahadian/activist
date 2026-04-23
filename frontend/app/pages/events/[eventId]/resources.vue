@@ -19,7 +19,6 @@
           :onClick="openModal"
         />
       </div>
-      <ModalResourceEvent />
     </HeaderAppPageEvent>
     <!-- Draggable list -->
     <div v-if="(event?.resources ?? []).length" class="py-4">

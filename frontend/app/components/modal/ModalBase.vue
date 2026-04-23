@@ -79,6 +79,7 @@ import { useRoute } from "vue-router";
 const props = defineProps<{
   imageModal?: boolean;
   modalName: string;
+  onClose?: () => void;
 }>();
 
 const emit = defineEmits(["closeModal"]);
@@ -114,6 +115,9 @@ watch(
 const closeModal = () => {
   emit("closeModal");
   modals.closeModal(modalName);
+  if (props.onClose) {
+    props.onClose();
+  }
 };
 
 // Check if the user is navigating to another resource.

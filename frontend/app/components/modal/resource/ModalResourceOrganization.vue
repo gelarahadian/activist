@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <template>
-  <ModalBase :modalName="modalName">
+  <ModalBase :modalName="modalName" :onClose="handleOnCloseModal">
     <FormResource
       :formData="formData"
       :handleSubmit="handleSubmit"
@@ -11,17 +11,15 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  resource?: Resource;
-}>();
+const modalName = "ModalResourceOrganization";
+const { context, handleCloseModal } = useModalHandlers<{resource?: Resource}>(modalName);
+const route = useRoute();
 
-const isAddMode = !props.resource;
-const modalName = "ModalResourceOrganization" + (props.resource?.id ?? "");
-const { handleCloseModal } = useModalHandlers(modalName);
-
-const paramsOrganizationId = useRoute().params.orgId;
-const organizationId =
-  typeof paramsOrganizationId === "string" ? paramsOrganizationId : undefined;
+const organizationId = computed(() => {
+  return typeof route.params.orgId === "string"
+    ? route.params.orgId
+    : "";
+});
 
 const { data: organization } = useGetOrganization(organizationId || "");
 const { createResource, updateResource } = useOrganizationResourcesMutations(
@@ -30,44 +28,33 @@ const { createResource, updateResource } = useOrganizationResourcesMutations(
 
 const formData = ref<Resource | undefined>();
 
-const submitLabel = isAddMode
+let isAddMode = true;
+let submitLabel = "";
+let title = "";
+
+console.log("context", context.value);
+
+watch(context, (newContext) => {
+  isAddMode = !newContext?.resource;
+
+  submitLabel = isAddMode
   ? "i18n.components.modal.resource._global.add_resource"
   : "i18n.components.modal.resource._global.update_resource";
 
-const title = isAddMode
-  ? "i18n.components.modal.resource._global.add_resource"
-  : "i18n.components.modal.resource._global.edit_resource";
-if (!isAddMode) {
-  onMounted(async () => {
-    if (props.resource) {
-      formData.value = {} as Resource;
-      formData.value.id = props.resource.id;
-      formData.value.name = props.resource.name;
-      formData.value.description = props.resource.description;
-      formData.value.url = props.resource.url;
-      formData.value.topics = props.resource.topics || [];
-      formData.value.order = props.resource.order;
-    }
-  });
-
-  watch(
-    props,
-    (newValues) => {
-      if (newValues.resource) {
-        formData.value = {} as Resource;
-        formData.value.name = newValues.resource.name;
-        formData.value.id = newValues.resource.id;
-        formData.value.description = newValues.resource.description;
-        formData.value.url = newValues.resource.url;
-        formData.value.topics = newValues.resource.topics || [];
-        formData.value.order = newValues.resource.order;
-      }
-    },
-    {
-      deep: true,
-    }
-  );
-}
+  title = isAddMode
+    ? "i18n.components.modal.resource._global.add_resource"
+    : "i18n.components.modal.resource._global.edit_resource";
+  
+  if (!isAddMode) {
+    formData.value = {} as Resource;
+    formData.value.id = newContext?.resource?.id || "";
+    formData.value.name = newContext?.resource?.name || "";
+    formData.value.description = newContext?.resource?.description || "";
+    formData.value.url = newContext?.resource?.url || "";
+    formData.value.topics = newContext?.resource?.topics || [];
+    formData.value.order = newContext?.resource?.order || 0;
+  }
+})
 
 async function handleSubmit(values: unknown) {
   const newValues = {
@@ -81,6 +68,11 @@ async function handleSubmit(values: unknown) {
     : await updateResource(newValues as ResourceInput);
   if (success) {
     handleCloseModal();
+    formData.value = {} as Resource;
   }
+}
+
+const handleOnCloseModal = () => {
+  formData.value = {} as Resource;
 }
 </script>

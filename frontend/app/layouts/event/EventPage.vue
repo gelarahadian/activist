@@ -6,7 +6,6 @@
       :entityId="eventId || ''"
       :entityType="EntityType.EVENT"
     />
-    <ModalQRCode />
     <SidebarLeft
       v-if="aboveMediumBP"
       @blur="sidebarHover = false"

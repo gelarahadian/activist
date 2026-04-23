@@ -39,45 +39,25 @@
         </DisclosureButton>
         <div class="flex gap-2 pr-2">
           <IconEdit
-            @click="
-              useModalHandlers(
-                `ModalFaqEntry${props.pageType.charAt(0).toUpperCase() + props.pageType.slice(1)}` +
-                  props.faqEntry.id
-              ).openModal()
-            "
+            @click="openModalEditFAQ({faqEntry: faqEntry})"
             class="flex"
             data-testid="faq-edit-button"
             :entity="entity"
           />
           <IconDelete
-            @click.stop="
-              useModalHandlers(`ModalDeleteFAQ${faqEntry.id}`).openModal()
-            "
-            @keydown.enter="
-              useModalHandlers(`ModalDeleteFAQ${faqEntry.id}`).openModal()
-            "
+            @click.stop="openModalDeleteFAQ({message: 'i18n.components.card_faq_entry.delete_confirmation',
+          name: 'ModalDeleteFAQ',
+          onConfirmation: handleDelete
+          })"
+            @keydown.enter="openModalDeleteFAQ({message: 'i18n.components.card_faq_entry.delete_confirmation',
+          name: 'ModalDeleteFAQ',
+          onConfirmation: handleDelete
+          })"
             :aria-label="$t('i18n.components.card_faq_entry.delete_aria_label')"
             class="flex"
             data-testid="faq-delete-button"
           />
         </div>
-        <ModalFaqEntryOrganization
-          v-if="pageType === 'organization'"
-          :faqEntry="faqEntry"
-        />
-        <ModalFaqEntryGroup
-          v-else-if="pageType === 'group'"
-          :faqEntry="faqEntry"
-        />
-        <ModalFaqEntryEvent
-          v-else-if="pageType === 'event'"
-          :faqEntry="faqEntry"
-        />
-        <ModalAlert
-          message="i18n.components.card_faq_entry.delete_confirmation"
-          :name="`ModalDeleteFAQ${faqEntry.id}`"
-          :onConfirmation="handleDelete"
-        />
       </div>
       <DisclosurePanel
         class="mt-2 border-t border-section-div py-2 pl-4 focus-within:border-0"
@@ -104,6 +84,13 @@ const props = defineProps<{
   entity?: Entity | null;
   tabindex?: number;
 }>();
+
+const modalName = `ModalFaqEntry${props.pageType.charAt(0).toUpperCase() + props.pageType.slice(1)}`;
+const { openModal: openModalEditFAQ } = useModalHandlers(modalName);
+console.log(props.pageType)
+
+const {openModal: openModalDeleteFAQ} = useModalHandlers(`ModalAlert`)
+
 const root = ref<HTMLElement | null>(null);
 defineExpose({ root });
 

@@ -17,7 +17,6 @@
           :element="$t('i18n._global.resources_lower')"
           :onClick="openModal"
         />
-        <ModalResourceOrganization />
       </div>
     </HeaderAppPageOrganization>
     <!-- Draggable list -->

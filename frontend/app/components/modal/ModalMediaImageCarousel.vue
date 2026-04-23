@@ -2,18 +2,18 @@
 <template>
   <ModalBase :modalName="modalName">
     <MediaImageCarousel
-      :entityType="entityType"
+      :entityType="context?.entityType"
       :fullscreen="true"
-      :imageUrls="imageUrls || []"
+      :imageUrls="[...(context?.imageUrls || [])]"
     />
   </ModalBase>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const { context } = useModalHandlers<{
   imageUrls: string[];
   entityType: EntityType;
-}>();
+}>("ModalMediaImage");
 
 const modalName = "ModalMediaImage";
 </script>

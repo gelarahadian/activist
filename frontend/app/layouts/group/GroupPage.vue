@@ -12,7 +12,6 @@
       :entityId="group?.id || ''"
       :entityType="EntityType.GROUP"
     />
-    <ModalQRCode />
     <SidebarLeft
       v-if="aboveMediumBP"
       @blur="sidebarHover = false"

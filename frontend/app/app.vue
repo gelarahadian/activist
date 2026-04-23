@@ -3,10 +3,7 @@
   <NuxtRouteAnnouncer />
   <NuxtLayout>
     <Toaster :richColors="true" :theme="isDark ? 'dark' : 'light'" />
-    <ModalCommandPalette :paletteData="commandPaletteData" />
-    <ModalCreateEvent />
-    <ModalCreateOrganization />
-    <ModalCreateGroup />
+    <ModalProviders />
     <NuxtPage />
   </NuxtLayout>
 </template>

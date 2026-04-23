@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <template>
-  <ModalBase :modalName="modalName">
+  <ModalBase :modalName="modalName" @close="handleOnCloseModal">
     <FormFAQEntry
       :formData="formData"
       :handleSubmit="handleSubmit"
@@ -11,16 +11,15 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  faqEntry?: FaqEntry;
-}>();
+const modalName = "ModalFaqEntryGroup";
+const { context, handleCloseModal } = useModalHandlers<{faqEntry?: FaqEntry}>(modalName);
+const route = useRoute();
 
-const isAddMode = !props.faqEntry;
-const modalName = "ModalFaqEntryGroup" + (props.faqEntry?.id ?? "");
-const { handleCloseModal } = useModalHandlers(modalName);
-
-const paramsGroupId = useRoute().params.groupId;
-const groupId = typeof paramsGroupId === "string" ? paramsGroupId : "";
+const groupId = computed(() => {
+  return typeof route.params.groupId === "string"
+    ? route.params.groupId
+    : "";
+});
 
 const { data: group } = useGetGroup(groupId);
 const { updateFAQ, createFAQ } = useGroupFAQEntryMutations(groupId);
@@ -33,37 +32,27 @@ const formData = ref({
   answer: "",
 });
 
-const submitLabel = isAddMode
+let isAddMode = true;
+let submitLabel = "";
+let title = "";
+
+watch(context, (newContext) => {
+  isAddMode = !newContext?.faqEntry;
+
+  submitLabel = isAddMode
   ? "i18n.components.modal.faq_entry._global.add_faq_entry"
   : "i18n.components.modal._global.update_texts";
 
-const title = isAddMode
-  ? "i18n.components.modal.faq_entry._global.add_faq_entry"
-  : "i18n.components.modal.faq_entry._global.edit_entry";
-
-if (!isAddMode) {
-  onMounted(async () => {
-    if (props.faqEntry) {
-      formData.value.id = props.faqEntry.id;
-      formData.value.question = props.faqEntry.question;
-      formData.value.answer = props.faqEntry.answer;
-    }
-  });
-
-  watch(
-    props,
-    (newValues) => {
-      if (newValues.faqEntry) {
-        formData.value.id = newValues.faqEntry.id;
-        formData.value.question = newValues.faqEntry.question;
-        formData.value.answer = newValues.faqEntry.answer;
-      }
-    },
-    {
-      deep: true,
-    }
-  );
-}
+  title = isAddMode
+    ? "i18n.components.modal.faq_entry._global.add_faq_entry"
+    : "i18n.components.modal.faq_entry._global.edit_entry";
+  
+  if (!isAddMode) {
+    formData.value.id = newContext?.faqEntry?.id || "";
+    formData.value.question = newContext?.faqEntry?.question || "";
+    formData.value.answer = newContext?.faqEntry?.answer || "";
+  }
+})
 
 async function handleSubmit(values: unknown) {
   let updateResponse = false;
@@ -75,6 +64,23 @@ async function handleSubmit(values: unknown) {
 
   if (updateResponse) {
     handleCloseModal();
+    formData.value = {
+      id: "",
+      iso: "en",
+      order: (group.value?.faqEntries ?? []).length,
+      question: "",
+      answer: ""
+    };
   }
+}
+
+const handleOnCloseModal = () => {
+  formData.value = {
+    id: "",
+    iso: "en",
+    order: (group.value?.faqEntries ?? []).length,
+    question: "",
+    answer: ""
+  };
 }
 </script>

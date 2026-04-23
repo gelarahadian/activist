@@ -225,24 +225,44 @@
 <script setup lang="ts">
 import { DialogTitle } from "@headlessui/vue";
 
-const props = defineProps<{
+const modalName = "ModalSharePage";
+
+const { context } = useModalHandlers<{
   cta: BtnAction["cta"];
   organization?: Organization;
   group?: Group;
   event?: CommunityEvent;
   resource?: Resource;
   user?: UserActivist;
-}>();
+}>(modalName);
 
-const modalName = "ModalSharePage";
+const organization = computed(() => {
+  return context?.value?.organization || null;
+});
+
+const group = computed(() => {
+  return context?.value?.group || null;
+});
+
+const event = computed(() => {
+  return context?.value?.event || null;
+});
+
+const resource = computed(() => {
+  return context?.value?.resource || null;
+});
+
+const user = computed(() => {
+  return context?.value?.user || null;
+});
 
 const getEntityType = () => {
-  if (props.organization) {
-    return setEntityInfo(props.organization);
-  } else if (props.group) {
-    return setEntityInfo(props.group);
-  } else if (props.event) {
-    return setEntityInfo(props.event);
+  if (organization.value) {
+    return setEntityInfo(organization.value);
+  } else if (group.value) {
+    return setEntityInfo(group.value);
+  } else if (event.value) {
+    return setEntityInfo(event.value);
   }
 };
 
@@ -257,25 +277,25 @@ const setEntityInfo = (data: Entity) => {
 };
 
 const getCurrentName = () => {
-  return props?.event?.name
-    ? props?.event?.name
-    : props?.organization?.name
-      ? props?.organization?.name
+  return event.value?.name
+    ? event.value?.name
+    : organization.value?.name
+      ? organization.value?.name
       : "";
 };
 
 // Function to grab the url to the base id of the entity to share.
 const getCurrentUrl = () => {
-  if (props.organization) {
-    return `${BASE_FRONTEND_URL}/organizations/${props.organization.id}`;
-  } else if (props.group) {
-    return `${BASE_FRONTEND_URL}/organizations/${props.group.org.id}/groups/${props.group.id}`;
-  } else if (props.event) {
-    return `${BASE_FRONTEND_URL}/events/${props.event.id}`;
-  } else if (props.resource) {
-    return props.resource.url;
-  } else if (props.user) {
-    return `${BASE_FRONTEND_URL}/users/${props.user.id}`;
+  if (organization.value) {
+    return `${BASE_FRONTEND_URL}/organizations/${organization.value.id}`;
+  } else if (group.value) {
+    return `${BASE_FRONTEND_URL}/organizations/${group.value.org.id}/groups/${group.value.id}`;
+  } else if (event.value) {
+    return `${BASE_FRONTEND_URL}/events/${event.value.id}`;
+  } else if (resource.value) {
+    return resource.value.url;
+  } else if (user.value) {
+    return `${BASE_FRONTEND_URL}/users/${user.value.id}`;
   }
   const url = window.location.href;
   return url.substring(0, url.lastIndexOf("/"));
