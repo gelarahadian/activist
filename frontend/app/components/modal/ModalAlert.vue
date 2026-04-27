@@ -33,6 +33,9 @@
 </template>
 
 <script setup lang="ts">
+import { IconMap } from '../../../shared/types/icon-map';
+
+
 const modalName = "ModalAlert";
 const { context, handleCloseModal } = useModalHandlers<{
   message: string;

@@ -277,11 +277,10 @@ const setEntityInfo = (data: Entity) => {
 };
 
 const getCurrentName = () => {
-  return event.value?.name
-    ? event.value?.name
-    : organization.value?.name
-      ? organization.value?.name
-      : "";
+  const e = unref(event);
+  const org = unref(organization);
+
+  return e?.name || org?.name || "";
 };
 
 // Function to grab the url to the base id of the entity to share.
