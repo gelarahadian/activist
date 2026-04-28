@@ -14,9 +14,11 @@
 const modalName = "ModalSocialLinksOrganization";
 const { handleCloseModal } = useModalHandlers(modalName);
 
-const paramsOrganizationId = useRoute().params.orgId;
-const orgId =
-  typeof paramsOrganizationId === "string" ? paramsOrganizationId : "";
+const route = useRoute();
+
+const orgId = computed(() => {
+  return typeof route.params.orgId === "string" ? route.params.orgId : "";
+});
 
 const { data: organization } = useGetOrganization(orgId);
 const { updateLink, createLinks, deleteLink } =

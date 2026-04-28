@@ -14,8 +14,11 @@
 const modalName = "ModalSocialLinksGroup";
 const { handleCloseModal } = useModalHandlers(modalName);
 
-const paramsGroupId = useRoute().params.groupId;
-const groupId = typeof paramsGroupId === "string" ? paramsGroupId : "";
+const route = useRoute();
+
+const groupId = computed(() => {
+  return typeof route.params.groupId === "string" ? route.params.groupId : "";
+});
 
 const { data: group } = useGetGroup(groupId);
 const { updateLink, createLinks, deleteLink } =

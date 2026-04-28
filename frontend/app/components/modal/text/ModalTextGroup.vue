@@ -17,11 +17,14 @@
 const modalName = "ModalTextGroup";
 const { handleCloseModal } = useModalHandlers(modalName);
 
-const paramsGroupId = useRoute().params.groupId;
-const groupId = typeof paramsGroupId === "string" ? paramsGroupId : undefined;
+const route = useRoute();
 
-const { data: group } = useGetGroup(groupId || "");
-const { updateTexts } = useGroupTextsMutations(groupId || "");
+const groupId = computed(() => {
+  return typeof route.params.groupId === "string" ? route.params.groupId : "";
+});
+
+const { data: group } = useGetGroup(groupId);
+const { updateTexts } = useGroupTextsMutations(groupId);
 
 const formData = ref<GroupUpdateTextFormData>({
   description: "",

@@ -13,8 +13,11 @@
 const modalName = "ModalSocialLinksEvent";
 const { handleCloseModal } = useModalHandlers(modalName);
 
-const paramsEventId = useRoute().params.eventId;
-const eventId = typeof paramsEventId === "string" ? paramsEventId : "";
+const route = useRoute();
+
+const eventId = computed(() => {
+  return typeof route.params.eventId === "string" ? route.params.eventId : "";
+});
 
 const { data: event } = useGetEvent(eventId);
 const { updateLink, createLinks, deleteLink } =
