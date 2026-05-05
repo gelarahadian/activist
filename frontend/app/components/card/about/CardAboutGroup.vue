@@ -30,8 +30,12 @@
         </h3>
         <IconEdit
           v-if="userIsSignedIn"
-          @click="openModalTextGroup"
-          @keydown.enter="openModalTextGroup"
+          @click="()=>openModalTextGroup({
+            entityId: group?.id,
+          })"
+          @keydown.enter="()=>openModalTextGroup({
+            entityId: group?.id,
+          })"
           data-testid="icon-edit"
         />
       </div>
