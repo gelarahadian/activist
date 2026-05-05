@@ -8,10 +8,10 @@
         </h2>
       </DialogTitle>
       <div class="mt-6 py-2 pr-1 md:max-h-[50vh] md:overflow-y-auto">
-        <div v-if="context?.event" class="space-y-3">
+        <div v-if="event" class="space-y-3">
           <div class="card-style m-1 p-2">
             <MetaTagOrganization
-              :organization="context.event.orgs as unknown as Organization[]"
+              :organization="event.orgs as unknown as Organization[]"
             />
           </div>
           <!-- TODO: Once we have more than one organization. -->
@@ -28,5 +28,8 @@
 import { DialogTitle } from "@headlessui/vue";
 
 const modalName = "ModalOrganizationOverview";
-const { context } = useModalHandlers<{ event?: CommunityEvent }>(modalName);
+defineProps<{
+  event?: CommunityEvent;
+  group?: Group;
+}>();
 </script>
