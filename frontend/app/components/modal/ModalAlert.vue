@@ -31,14 +31,17 @@
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-  modalName?: string;
-  confirmBtnLabel?: string;
-  message?: string;
-}>(), {
-  confirmBtnLabel: 'i18n.components.modal_alert.confirm',
-  modalName: "ModalAlert",
-});
+const props = withDefaults(
+  defineProps<{
+    modalName?: string;
+    confirmBtnLabel?: string;
+    message?: string;
+  }>(),
+  {
+    confirmBtnLabel: "i18n.components.modal_alert.confirm",
+    modalName: "ModalAlert",
+  }
+);
 
 const modalAlertName = computed(() => props.modalName);
 const { handleCloseModal } = useModalHandlers<{

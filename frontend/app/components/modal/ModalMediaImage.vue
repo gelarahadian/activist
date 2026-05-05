@@ -10,11 +10,14 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(defineProps<{
-  imageUrls?: string[];
-  entityType: EntityType;
-}>(),{
-  imageUrls: () => [],
-});
+withDefaults(
+  defineProps<{
+    imageUrls?: string[];
+    entityType: EntityType;
+  }>(),
+  {
+    imageUrls: () => [],
+  }
+);
 const modalName = "ModalMediaImage";
 </script>
