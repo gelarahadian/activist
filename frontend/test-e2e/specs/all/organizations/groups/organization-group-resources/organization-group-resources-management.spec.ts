@@ -129,9 +129,7 @@ test.describe(
         await groupResourcesPage.clickResourceEdit(0);
 
         // Wait for modal to open with exact testid (includes resource ID).
-        const editResourceModal = page.getByTestId(
-          `modal-ModalResourceGroup`
-        );
+        const editResourceModal = page.getByTestId(`modal-ModalResourceGroup`);
         await expect(editResourceModal).toBeVisible();
 
         // Generate unique content for this test run.

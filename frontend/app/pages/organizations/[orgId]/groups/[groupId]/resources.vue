@@ -14,12 +14,18 @@
     >
       <div class="flex space-x-2 pb-3 lg:space-x-3 lg:pb-4">
         <BtnAction
-          @click.stop="() => openModalResourceGroup({
-            entityId: group?.id,
-          })"
-          @keydown.enter="() => openModalResourceGroup({
-            entityId: group?.id,
-          })"
+          @click.stop="
+            () =>
+              openModalResourceGroup({
+                entityId: group?.id,
+              })
+          "
+          @keydown.enter="
+            () =>
+              openModalResourceGroup({
+                entityId: group?.id,
+              })
+          "
           ariaLabel="i18n.pages._global.resources.new_resource_aria_label"
           class="w-max"
           :cta="true"

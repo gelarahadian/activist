@@ -14,9 +14,12 @@
         <BtnActionAdd
           ariaLabel="i18n.pages._global.new_faq_aria_label"
           :element="$t('i18n._global.faq')"
-          :onClick="() => openModal({
-            entityId: group?.id,
-          })"
+          :onClick="
+            () =>
+              openModal({
+                entityId: group?.id,
+              })
+          "
         />
       </div>
     </HeaderAppPageGroup>
