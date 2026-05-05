@@ -1,11 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <template>
   <NuxtLayout name="app">
-    <ModalUploadImageIcon
-      @closeModal="handleCloseModalUploadImageIcon"
-      :entityId="eventId || ''"
-      :entityType="EntityType.EVENT"
-    />
     <SidebarLeft
       v-if="aboveMediumBP"
       @blur="sidebarHover = false"
@@ -36,10 +31,6 @@ const paramsEventId = useRoute().params.eventId;
 const eventId = typeof paramsEventId === "string" ? paramsEventId : undefined;
 
 const { data: event } = useGetEvent(eventId || "");
-
-const { handleCloseModal: handleCloseModalUploadImageIcon } = useModalHandlers(
-  "ModalUploadImageIcon"
-);
 
 const sidebarHover = ref(false);
 const sidebarContentScrollable = useState<boolean>("sidebarContentScrollable");

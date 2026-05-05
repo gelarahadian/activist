@@ -15,7 +15,12 @@
         <BtnActionAdd
           ariaLabel="i18n.pages._global.resources.new_resource_aria_label"
           :element="$t('i18n._global.resources_lower')"
-          :onClick="openModal"
+          :onClick="
+            () =>
+              openModal({
+                entityId: organization?.id,
+              })
+          "
         />
       </div>
     </HeaderAppPageOrganization>

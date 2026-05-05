@@ -17,11 +17,11 @@
 const modalName = "ModalTextEvent";
 const { handleCloseModal } = useModalHandlers(modalName);
 
-const route = useRoute();
+const props = defineProps<{
+  entityId: string;
+}>();
 
-const eventId = computed(() => {
-  return typeof route.params.eventId === "string" ? route.params.eventId : "";
-});
+const eventId = computed(() => props.entityId);
 
 const { data: event } = useGetEvent(eventId);
 const { updateTexts } = useEventTextsMutations(eventId);

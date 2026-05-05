@@ -17,11 +17,11 @@
 const modalName = "ModalTextGroup";
 const { handleCloseModal } = useModalHandlers(modalName);
 
-const route = useRoute();
+const props = defineProps<{
+  entityId: string;
+}>();
 
-const groupId = computed(() => {
-  return typeof route.params.groupId === "string" ? route.params.groupId : "";
-});
+const groupId = computed(() => props.entityId);
 
 const { data: group } = useGetGroup(groupId);
 const { updateTexts } = useGroupTextsMutations(groupId);

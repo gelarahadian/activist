@@ -3,7 +3,7 @@
   <NuxtRouteAnnouncer />
   <NuxtLayout>
     <Toaster :richColors="true" :theme="isDark ? 'dark' : 'light'" />
-    <ModalProviders />
+    <ModalProvider />
     <NuxtPage />
   </NuxtLayout>
 </template>
@@ -38,12 +38,20 @@ const isDark = computed(() => colorMode.value === "dark");
 
 whenever(meta_k ?? ref(false), () => {
   if (isMacOS) {
-    openModalCommandPalette();
+    openModalCommandPalette({
+      context: {
+        paletteData: commandPaletteData,
+      },
+    });
   }
 });
 whenever(ctrl_k ?? ref(false), () => {
   if (!isMacOS) {
-    openModalCommandPalette();
+    openModalCommandPalette({
+      context: {
+        paletteData: commandPaletteData,
+      },
+    });
   }
 });
 </script>

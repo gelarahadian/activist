@@ -226,34 +226,33 @@
 import { DialogTitle } from "@headlessui/vue";
 
 const modalName = "ModalSharePage";
-
-const { context } = useModalHandlers<{
+const props = defineProps<{
   cta: BtnAction["cta"];
   organization?: Organization;
   group?: Group;
   event?: CommunityEvent;
   resource?: Resource;
   user?: UserActivist;
-}>(modalName);
+}>();
 
 const organization = computed(() => {
-  return context?.value?.organization || null;
+  return props.organization || null;
 });
 
 const group = computed(() => {
-  return context?.value?.group || null;
+  return props.group || null;
 });
 
 const event = computed(() => {
-  return context?.value?.event || null;
+  return props.event || null;
 });
 
 const resource = computed(() => {
-  return context?.value?.resource || null;
+  return props.resource || null;
 });
 
 const user = computed(() => {
-  return context?.value?.user || null;
+  return props.user || null;
 });
 
 const getEntityType = () => {

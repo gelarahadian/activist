@@ -73,7 +73,6 @@ import {
   ComboboxOptions,
 } from "@headlessui/vue";
 import { useRouter } from "vue-router";
-
 const props = defineProps<{
   paletteData: Command[];
 }>();

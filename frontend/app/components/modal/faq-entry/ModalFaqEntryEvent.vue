@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <template>
-  <ModalBase :close="handleOnCloseModal" :modalName="modalName">
+  <ModalBase :modalName="modalName">
     <FormFAQEntry
       :formData="formData"
       :handleSubmit="handleSubmit"
@@ -12,14 +12,16 @@
 
 <script setup lang="ts">
 const modalName = "ModalFaqEntryEvent";
-const { context, handleCloseModal } = useModalHandlers<{ faqEntry?: FaqEntry }>(
+const { handleCloseModal } = useModalHandlers<{ faqEntry?: FaqEntry }>(
   modalName
 );
-const route = useRoute();
 
-const eventId = computed(() => {
-  return typeof route.params.eventId === "string" ? route.params.eventId : "";
-});
+const props = defineProps<{
+  faqEntry?: FaqEntry;
+  entityId: string;
+}>();
+
+const eventId = computed(() => props.entityId);
 
 const { data: event } = useGetEvent(eventId);
 const { updateFAQ, createFAQ } = useEventFAQEntryMutations(eventId);
@@ -36,23 +38,26 @@ let isAddMode = true;
 let submitLabel = "";
 let title = "";
 
-watch(context, (newContext) => {
-  isAddMode = !newContext?.faqEntry;
+watch(
+  () => props,
+  (newProps) => {
+    isAddMode = !newProps?.faqEntry;
+    submitLabel = isAddMode
+      ? "i18n.components.modal.faq_entry._global.add_faq_entry"
+      : "i18n.components.modal._global.update_texts";
 
-  submitLabel = isAddMode
-    ? "i18n.components.modal.faq_entry._global.add_faq_entry"
-    : "i18n.components.modal._global.update_texts";
+    title = isAddMode
+      ? "i18n.components.modal.faq_entry._global.add_faq_entry"
+      : "i18n.components.modal.faq_entry._global.edit_entry";
 
-  title = isAddMode
-    ? "i18n.components.modal.faq_entry._global.add_faq_entry"
-    : "i18n.components.modal.faq_entry._global.edit_entry";
-
-  if (!isAddMode) {
-    formData.value.id = newContext?.faqEntry?.id || "";
-    formData.value.question = newContext?.faqEntry?.question || "";
-    formData.value.answer = newContext?.faqEntry?.answer || "";
-  }
-});
+    if (!isAddMode) {
+      formData.value.id = newProps?.faqEntry?.id || "";
+      formData.value.question = newProps?.faqEntry?.question || "";
+      formData.value.answer = newProps?.faqEntry?.answer || "";
+    }
+  },
+  { immediate: true }
+);
 
 async function handleSubmit(values: unknown) {
   let updateResponse = false;
@@ -64,23 +69,6 @@ async function handleSubmit(values: unknown) {
 
   if (updateResponse) {
     handleCloseModal();
-    formData.value = {
-      id: "",
-      iso: "en",
-      order: (event.value?.faqEntries ?? []).length,
-      question: "",
-      answer: "",
-    };
   }
 }
-
-const handleOnCloseModal = () => {
-  formData.value = {
-    id: "",
-    iso: "en",
-    order: (event.value?.faqEntries ?? []).length,
-    question: "",
-    answer: "",
-  };
-};
 </script>

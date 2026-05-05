@@ -2,6 +2,7 @@
 <template>
   <div class="relative" data-testid="image-carousel">
     <MediaImageCarousel
+      @edit-images="handleEditUploadImage()"
       :entityType="entityType"
       :fullscreen="false"
       :imageUrls="imageUrls"
@@ -38,6 +39,22 @@ const props = defineProps<{
 
 const { openModal: openMediaImageCarousel } =
   useModalHandlers("ModalMediaImage");
+const { openModal: openModalUploadImageOrganization } = useModalHandlers(
+  "ModalUploadImageOrganization"
+);
+const { openModal: openModalUploadImageGroup } = useModalHandlers(
+  "ModalUploadImageGroup"
+);
+const handleEditUploadImage = () => {
+  if (props.entityType === EntityType.GROUP)
+    openModalUploadImageGroup({
+      groupId: props.entityId as unknown as Group,
+    });
+  if (props.entityType === EntityType.ORGANIZATION)
+    openModalUploadImageOrganization({
+      orgId: props.entityId as unknown as Organization,
+    });
+};
 
 const { defaultImageUrls } = useFileManager();
 const imageUrls = ref<string[]>([]);

@@ -8,7 +8,7 @@
           :name="IconMap.WARN_OCTAGON"
           size="1.4em"
         />
-        <p>{{ $t(context.message) }}</p>
+        <p>{{ $t(props.message || "") }}</p>
       </div>
       <div class="flex gap-2">
         <BtnAction
@@ -17,7 +17,7 @@
           :cta="true"
           fontSize="sm"
           :label="
-            context.confirmBtnLabel || 'i18n.components.modal_alert.confirm'
+            props.confirmBtnLabel || 'i18n.components.modal_alert.confirm'
           "
         />
         <BtnAction
@@ -33,19 +33,24 @@
 </template>
 
 <script setup lang="ts">
-import { IconMap } from '../../../shared/types/icon-map';
-
-
-const modalName = "ModalAlert";
-const { context, handleCloseModal } = useModalHandlers<{
-  message: string;
+const props = defineProps<{
+  modalName: string;
   confirmBtnLabel?: string;
   onConfirmation?: () => Promise<void> | void;
-  name?: string;
-}>(modalName);
+  message?: string;
+}>();
 
+const modalAlertName = computed(() => props.modalName);
+const { handleCloseModal } = useModalHandlers<{
+  message: string;
+  confirmBtnLabel?: string;
+}>(modalAlertName.value);
+
+const emit = defineEmits<{
+  (e: "confirm"): void;
+}>();
 const onConfirm = async () => {
-  await context.value?.onConfirmation?.();
+  emit("confirm");
   handleCloseModal();
 };
 </script>

@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-export function useModalHandlers<T = unknown>(modalName: string) {
+export function useModalHandlers<TProps = unknown, TContext = unknown>(
+  modalName: string
+) {
   const { updateContext, openModal, closeModal, modals } = useModals();
 
-  const handleOpenModal = (params?: T) => {
-    openModal(modalName, params);
+  // Accept props and context separately
+  const handleOpenModal = (props?: TProps, context?: TContext) => {
+    openModal(modalName, props, context);
   };
   const handleCloseModal = () => closeModal(modalName);
 
-  const handleUpdateContext = (params: T) => {
-    updateContext(modalName, params);
+  const handleUpdateContext = (context: TContext) => {
+    updateContext(modalName, context);
   };
 
   const modal = computed(() => modals[modalName]);
@@ -18,6 +21,7 @@ export function useModalHandlers<T = unknown>(modalName: string) {
     openModal: handleOpenModal,
     handleCloseModal,
     updateContext: handleUpdateContext,
-    context: readonly(computed(() => modal.value?.context as T)),
+    props: readonly(computed(() => modal.value?.props as TProps)),
+    context: readonly(computed(() => modal.value?.context as TContext)),
   };
 }

@@ -64,13 +64,13 @@
           <MediaImageCarouselFull
             v-if="!textExpanded || !aboveLargeBP"
             :entityId="group?.id || ''"
-            :entityType="'group' as EntityType"
+            :entityType="EntityType.GROUP"
             :images="images || []"
           />
         </div>
       </div>
       <CardGetInvolvedGroup :group="group" />
-      <CardConnectGroup />
+      <CardConnectGroup :group="group" />
     </div>
   </div>
 </template>

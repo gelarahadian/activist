@@ -39,7 +39,9 @@
         </DisclosureButton>
         <div class="flex gap-2 pr-2">
           <IconEdit
-            @click="openModalEditFAQ({ faqEntry: faqEntry })"
+            @click="
+              openModalEditFAQ({ faqEntry: faqEntry, entityId: entity?.id })
+            "
             class="flex"
             data-testid="faq-edit-button"
             :entity="entity"
@@ -47,16 +49,14 @@
           <IconDelete
             @click.stop="
               openModalDeleteFAQ({
-                message: 'i18n.components.card_faq_entry.delete_confirmation',
-                name: 'ModalDeleteFAQ',
-                onConfirmation: handleDelete,
+                entityId: entity?.id,
+                faqEntryId: faqEntry.id,
               })
             "
             @keydown.enter="
               openModalDeleteFAQ({
-                message: 'i18n.components.card_faq_entry.delete_confirmation',
-                name: 'ModalDeleteFAQ',
-                onConfirmation: handleDelete,
+                entityId: entity?.id,
+                faqEntryId: faqEntry.id,
               })
             "
             :aria-label="$t('i18n.components.card_faq_entry.delete_aria_label')"
@@ -91,16 +91,17 @@ const props = defineProps<{
   tabindex?: number;
 }>();
 
-const modalName = `ModalFaqEntry${props.pageType.charAt(0).toUpperCase() + props.pageType.slice(1)}`;
-const { openModal: openModalEditFAQ } = useModalHandlers(modalName);
+const modalName = computed(
+  () =>
+    `ModalFaqEntry${props.pageType.charAt(0).toUpperCase() + props.pageType.slice(1)}`
+);
 
-const { openModal: openModalDeleteFAQ } = useModalHandlers(`ModalAlert`);
+const { openModal: openModalEditFAQ } = useModalHandlers(modalName.value);
+
+const { openModal: openModalDeleteFAQ } = useModalHandlers(
+  `ModalFaqEntryDelete${props.pageType.charAt(0).toUpperCase() + props.pageType.slice(1)}`
+);
 
 const root = ref<HTMLElement | null>(null);
 defineExpose({ root });
-
-const emit = defineEmits<{
-  (e: "delete-faq", faqId: string): void;
-}>();
-const handleDelete = () => emit("delete-faq", props.faqEntry.id);
 </script>

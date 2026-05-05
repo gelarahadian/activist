@@ -21,8 +21,16 @@
             {{ $t("i18n.components.card_details.header") }}
           </h3>
           <IconEdit
-            @click="openModalTextEvent()"
-            @keydown.enter="openModalTextEvent()"
+            @click="
+              openModalTextEvent({
+                entityId: event?.id,
+              })
+            "
+            @keydown.enter="
+              openModalTextEvent({
+                entityId: event?.id,
+              })
+            "
             :entity="event"
           />
         </div>
@@ -75,14 +83,14 @@ const { openModal: openModalTextEvent } = useModalHandlers("ModalTextEvent");
 // const { openModal: openModalOrganizationOverview } = useModalHandlers(
 //   "ModalOrganizationOverview"
 // );
-const paramsEventId = useRoute().params.eventId;
-const eventId = typeof paramsEventId === "string" ? paramsEventId : "";
+const props = defineProps<{
+  event: CommunityEvent | null;
+}>();
 
-const { data: event } = useGetEvent(eventId);
-
+const eventForLinkURL = computed(() => props.event);
 const { linkUrl: eventLinkUrl } = useLinkURL({
   get event() {
-    return event.value ?? undefined;
+    return eventForLinkURL.value ?? undefined;
   },
 });
 </script>

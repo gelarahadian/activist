@@ -4,12 +4,10 @@
 </template>
 
 <script setup lang="ts">
-const paramsOrgId = useRoute().params.orgId;
-
-const { data: organization } = useGetOrganization(
-  typeof paramsOrgId === "string" ? paramsOrgId : ""
-);
+const props = defineProps<{
+  organization: Organization | null;
+}>();
 
 // Use computed to ensure social links are reactive to store changes.
-const socialLinks = computed(() => organization.value?.socialLinks || []);
+const socialLinks = computed(() => props.organization?.socialLinks ?? []);
 </script>

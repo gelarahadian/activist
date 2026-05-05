@@ -69,14 +69,14 @@
         <div class="h-full w-full">
           <MediaImageCarouselFull
             v-if="!textExpanded || !aboveLargeBP"
-            :entityId="organization?.id ?? ''"
-            :entityType="'organization' as EntityType"
+            :entityId="organization?.id || ''"
+            :entityType="EntityType.ORGANIZATION"
             :images="images || []"
           />
         </div>
       </div>
       <CardGetInvolvedOrganization />
-      <CardConnectOrganization />
+      <CardConnectOrganization :organization="organization" />
       <!-- <CardDonate
         v-if="organization.status === 2"
         :userIsAdmin="true"

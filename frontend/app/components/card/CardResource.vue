@@ -92,8 +92,18 @@
         :entity="entity"
       />
       <IconDelete
-        @click.stop="openModalDeleteConfirm()"
-        @keydown.enter="openModalDeleteConfirm()"
+        @click.stop="
+          openModalDeleteConfirm({
+            resourceId: resource.id,
+            entityId: entity?.id ?? '',
+          })
+        "
+        @keydown.enter="
+          openModalDeleteConfirm({
+            resourceId: resource.id,
+            entityId: entity?.id ?? '',
+          })
+        "
         :entity="entity"
       />
     </div>
@@ -111,18 +121,6 @@ const props = defineProps<{
 const { t } = useI18n();
 const aboveMediumBP = useBreakpoint("md");
 const localePath = useLocalePath();
-
-const groupResourcesMutations = useGroupResourcesMutations(
-  props.entity?.id ?? ""
-);
-
-const organizationResourcesMutations = useOrganizationResourcesMutations(
-  props.entity?.id ?? ""
-);
-
-const eventResourcesMutations = useEventResourcesMutations(
-  props.entity?.id ?? ""
-);
 
 const description = computed(() => {
   return props.resource.description || "";
@@ -144,28 +142,20 @@ const dragIconSizeClass = computed(() => ({
   "h-[25px] w-[25px]": props.isReduced,
   "h-[50px] w-[50px]": !props.isReduced,
 }));
-
+const { openModal } = useModalHandlers(
+  `ModalResource${props.entityType.charAt(0).toUpperCase() + props.entityType.slice(1)}`
+);
 const openModalEdit = () => {
-  const name = `ModalResource${props.entityType.charAt(0).toUpperCase() + props.entityType.slice(1)}${props.resource.id}`;
-  useModalHandlers(name).openModal();
+  openModal({
+    resource: props.resource,
+    entityId: props.entity?.id ?? "",
+  });
 };
 
 // Delete confirmation modal.
-const { openModal: openModalDeleteConfirm } = useModalHandlers("ModalAlert");
-
-// Map entity type to delete mutation.
-const deleteByEntityType = {
-  [EntityType.GROUP]: groupResourcesMutations?.deleteResource,
-  [EntityType.ORGANIZATION]: organizationResourcesMutations?.deleteResource,
-  [EntityType.EVENT]: eventResourcesMutations?.deleteResource,
-};
-
-const handleDeleteResource = async () => {
-  const deleteResource = deleteByEntityType[props.entityType];
-  if (deleteResource && props.resource.id) {
-    await deleteResource(props.resource.id);
-  }
-};
+const { openModal: openModalDeleteConfirm } = useModalHandlers(
+  `ModalResourceDelete${props.entityType.charAt(0).toUpperCase() + props.entityType.slice(1)}`
+);
 
 const root = ref<HTMLElement | null>(null);
 defineExpose({ root });
