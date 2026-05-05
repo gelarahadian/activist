@@ -1,5 +1,4 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <template>
   <template v-for="(state, modalName) in modalStore.modals" :key="modalName">
     <!-- Only render the component if it is registered and open -->
@@ -15,7 +14,7 @@
 <script setup lang="ts">
 const modalStore = useModals();
 
-// Map string names to actual Vue components here
+// Map string names to actual Vue components here.
 const modalRegistry: Record<string, Component> = {
   ModalQRCode: defineAsyncComponent(() => import("./qr-code/ModalQRCode.vue")),
   ModalCreateEvent: defineAsyncComponent(

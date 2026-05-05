@@ -11,23 +11,23 @@ export const useModals = defineStore("modals", {
   }),
 
   actions: {
-    // Add props and context as separate parameters
+    // Add props and context as separate parameters.
     openModal(modalName: string, props?: unknown, context?: unknown) {
-      // 1. Guarantee only one modal is open at a time
+      // 1. Guarantee only one modal is open at a time.
       for (const key in this.modals) {
         if (this.modals[key]) {
           this.modals[key].isOpen = false;
         }
       }
 
-      // 2. Open the new modal
+      // 2. Open the new modal.
       this.modals[modalName] = { isOpen: true, props, context };
     },
 
     closeModal(modalName: string) {
       if (this.modals[modalName]) {
         this.modals[modalName].isOpen = false;
-        // Clean up memory to avoid stale data next time it opens
+        // Clean up memory to avoid stale data next time it opens.
         this.modals[modalName].props = undefined;
         this.modals[modalName].context = undefined;
       }

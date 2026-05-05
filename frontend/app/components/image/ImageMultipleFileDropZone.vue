@@ -115,7 +115,7 @@ function handleAdd(files: File[]) {
 }
 
 async function handleRemoveFile(file: FileUploadMix) {
-  // Await the removal so the API call finishes and local array is spliced
+  // Await the removal so the API call finishes and local array is spliced.
   await removeFile(localFiles.value, file.data);
 
   emitFiles();

@@ -247,5 +247,7 @@
   "i18n.components.form_text_entity.description_required": "Bir açıklama gereklidir",
   "i18n.components.form_text_entity.get_involved_text_or_url_required": "Katılmak için metin veya URL gereklidir",
   "i18n.components.form_text_entity.max_text_length": "Metin {max_text_length} karakterden az olmalıdır.",
+  "i18n.components.modal.faq_entry.delete._global.message": "Bu Sıkça Sorulan Sorular Girişini Silmek istediğinden emin misin? Bu işlem geri alınamaz.",
+  "i18n.components.modal.resource.delete._global.message": "Bu kaynağı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.",
   "i18n.pages.organizations.groups.resources.new_resource": "Yeni kaynak"
 }

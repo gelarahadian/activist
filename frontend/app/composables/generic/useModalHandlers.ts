@@ -5,7 +5,7 @@ export function useModalHandlers<TProps = unknown, TContext = unknown>(
 ) {
   const { updateContext, openModal, closeModal, modals } = useModals();
 
-  // Accept props and context separately
+  // Accept props and context separately.
   const handleOpenModal = (props?: TProps, context?: TContext) => {
     openModal(modalName, props, context);
   };

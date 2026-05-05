@@ -9,5 +9,5 @@ const props = defineProps<{
 }>();
 
 // Use computed to ensure social links are reactive to store changes.
-const socialLinks = computed(() => props?.event?.socialLinks ?? []);
+const socialLinks = computed(() => props.event?.socialLinks ?? []);
 </script>

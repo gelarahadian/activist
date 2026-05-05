@@ -79,13 +79,11 @@
 </template>
 
 <script setup lang="ts">
-const { openModal: openModalTextEvent } = useModalHandlers("ModalTextEvent");
-// const { openModal: openModalOrganizationOverview } = useModalHandlers(
-//   "ModalOrganizationOverview"
-// );
 const props = defineProps<{
   event: CommunityEvent | null;
 }>();
+
+const { openModal: openModalTextEvent } = useModalHandlers("ModalTextEvent");
 
 const eventForLinkURL = computed(() => props.event);
 const { linkUrl: eventLinkUrl } = useLinkURL({

@@ -6,13 +6,16 @@
     :modalName="modalName"
   />
 </template>
+
 <script setup lang="ts">
-const modalName = "ModalFaqEntryDeleteGroup";
-const { handleCloseModal } = useModalHandlers(modalName);
 const props = defineProps<{
   faqEntryId: string;
   entityId: string;
 }>();
+
+const modalName = "ModalFaqEntryDeleteGroup";
+const { handleCloseModal } = useModalHandlers(modalName);
+
 const groupId = computed(() => props.entityId);
 const { deleteFAQ } = useGroupFAQEntryMutations(groupId);
 const handleDelete = async () => {

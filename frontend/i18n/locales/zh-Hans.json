@@ -245,5 +245,7 @@
   "i18n.components.footer_website.version_number": "v0.0.1",
   "i18n.components.footer_website.version_number_aria_label": "查看github发布版本",
   "i18n.components.form._global.valid_url_required": "网址无效",
-  "i18n.components.form_faq_entry.answer": "答案"
+  "i18n.components.form_faq_entry.answer": "答案",
+  "i18n.components.modal.faq_entry.delete._global.message": "您确定要删除此常问问题条目吗？此操作无法撤销。",
+  "i18n.components.modal.resource.delete._global.message": "您确定要删除此资源吗？此操作无法撤销。"
 }

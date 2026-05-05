@@ -123,9 +123,8 @@ test.describe(
           {}
         );
 
-        // Click the card
+        // Click the card and edit button for resource.
         await groupResourcesPage.clickResourceEdit(0);
-        // Clicking edit button for resource
         await groupResourcesPage.clickResourceEdit(0);
 
         // Wait for modal to open with exact testid (includes resource ID).

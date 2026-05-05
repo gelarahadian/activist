@@ -6,13 +6,16 @@
     :modalName="modalName"
   />
 </template>
+
 <script setup lang="ts">
-const modalName = "ModalResourceDeleteEvent";
-const { handleCloseModal } = useModalHandlers(modalName);
 const props = defineProps<{
   resourceId: string;
   entityId: string;
 }>();
+
+const modalName = "ModalResourceDeleteEvent";
+const { handleCloseModal } = useModalHandlers(modalName);
+
 const eventId = computed(() => props.entityId);
 const { deleteResource } = useEventResourcesMutations(eventId);
 const handleDelete = async () => {
