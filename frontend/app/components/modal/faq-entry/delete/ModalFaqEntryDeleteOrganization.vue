@@ -2,13 +2,8 @@
 <template>
   <ModalAlert
     @confirm="handleDelete"
-    :cancelButtonLabel="$t('i18n.components.modal._global.cancel')"
-    :confirmButtonLabel="
-      $t('i18n.components.modal.faq_entry_delete.confirm_button')
-    "
-    :message="$t('i18n.components.modal.faq_entry_delete.message')"
+    :message="$t('i18n.components.modal.faq_entry.delete._global.message')"
     :modalName="modalName"
-    :title="$t('i18n.components.modal.faq_entry_delete.title')"
   />
 </template>
 <script setup lang="ts">

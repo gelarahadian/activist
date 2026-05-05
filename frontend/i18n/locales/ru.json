@@ -159,8 +159,6 @@
   "i18n.components.footer_website.copyright": "Лицензия: AGPL-3.0; CC BY-SA 4.0.",
   "i18n.components.footer_website.privacy_policy": "Политика конфиденциальности",
   "i18n.components.footer_website.source_code": "Исходный код",
-  "i18n.components.modal_resource_delete_organization.confirm_delete": "Удалить",
-  "i18n.components.modal_resource_delete_organization.confirm_delete_message": "Вы уверены, что хотите удалить этот ресурс? Это действие необратимо.",
   "i18n.pages.index.about_us": "О нас",
   "i18n.pages.index.become_supporter": "Станьте спонсором",
   "i18n.pages.index.get_active_header": "Проявляйте активность",
